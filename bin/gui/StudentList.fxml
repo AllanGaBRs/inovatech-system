@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.StudentListController">
+	<children>
+		<Label text="Lista de alunos que frequentam o inovatech">
+			<font>
+				<Font name="System Bold" size="14.0" />
+			</font>
+			<padding>
+				<Insets left="5.0" top="5.0" />
+			</padding>
+		</Label>
+		<TableView fx:id="tableViewStudent" prefHeight="442.0" prefWidth="600.0">
+			<columns>
+				<TableColumn fx:id="tableColumnId" prefWidth="29.600006878376007" text="Id" />
+				<TableColumn fx:id="tableColumnRa" prefWidth="66.39995956420898" text="RA" />
+            <TableColumn fx:id="tableColumnName" prefWidth="159.20001220703125" text="Nome" />
+            <TableColumn fx:id="tableColumnEmail" prefWidth="102.39996337890625" text="E-mail" />
+            <TableColumn fx:id="tableColumnCourse" prefWidth="119.20001220703125" text="Curso" />
+            <TableColumn fx:id="tableColumnHours" minWidth="9.60003662109375" prefWidth="76.00006103515625" text="Horas" />
+			</columns>
+		</TableView>
+	</children>
+</VBox>
