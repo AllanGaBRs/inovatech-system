@@ -2,9 +2,9 @@ package gui;
 
 
 import java.io.IOException;
-import java.lang.reflect.InaccessibleObjectException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 import java.util.function.Consumer;
 
 import application.Main;
@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -35,16 +36,23 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemVizualizarAlunos;
 	@FXML
 	private MenuItem menuItemAjudaSobre;
+	@FXML
+	private MenuItem login;
 	
-	private StudentDao sd = DaoFactory.createStudentDao();
-	private Student student = sd.findById(1);
+	private static StudentDao sd = DaoFactory.createStudentDao();
+	private static Student student = new Student(false);
+	
+	public static void setStudent(Student st) {
+		student = st;
+	}
 	
 	@FXML
 	public void onMenuItemRegistrarAlunoAction() {
 		if(!student.getAdm()) {
 			Alerts.showAlert("Apenas Administradores podem acessar", "Acesso negado", "Erro", AlertType.ERROR);
-		}else {
-			loadView("/gui/Register.fxml", x -> {});			
+		}
+		if(student.getAdm()) {
+			loadView("/gui/Register.fxml", x -> {});						
 		}
 	}
 	@FXML
@@ -53,7 +61,7 @@ public class MainViewController implements Initializable{
 	}
 	@FXML
 	public void onMenuItemEntrarAdmAction() {
-		loadView("/gui/EnterAdm.fxml", x -> {});
+			loadView("/gui/EnterAdm.fxml", x -> {});			
 	}
 	@FXML
 	public void onMenuItemVizualizarAlunosAction() {
@@ -78,7 +86,10 @@ public class MainViewController implements Initializable{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+			if(student.getName() != null) {
+				StringTokenizer str = new StringTokenizer(student.getName());
+				login.setText(str.nextToken(" "));				
+			}
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox)((ScrollPane)mainScene.getRoot()).getContent();
 			Node mainMenu = mainVBox.getChildren().get(0);

@@ -34,6 +34,7 @@
 								<MenuItem fx:id="menuItemAjudaSobre" mnemonicParsing="false" onAction="#onmenuItemAjudaSobre" text="Rui e Allan" />
 							</items>
 						</Menu>
+                  <Menu fx:id="login" mnemonicParsing="false" text="" />
 					</menus>
 				</MenuBar>
 			</children>

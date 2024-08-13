@@ -19,6 +19,10 @@ public class Student implements Serializable {
 	public Student() {
 	}
 	
+	public Student(Boolean adm) {
+		this.adm = adm;
+	}
+	
 	public Student(Integer id, String ra, String name, String email, String pass, String course, Double hours, Boolean adm) {
 		this.id = id;
 		this.ra = ra;
@@ -113,6 +117,6 @@ public class Student implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", ra=" + ra + ", name=" + name + ", email=" + email + ", course=" + course + "]";
+		return name;
 	}
 }

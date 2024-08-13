@@ -109,7 +109,9 @@ public class StudentDaoJDBC implements StudentDao{
 					student = instantiateStudent(rs);
 					map.put(student.getId(), student);
 				}
-				
+				if(student.getId() == 1) {
+					continue;
+				}
 				list.add(student);
 			}
 			return list;
@@ -161,6 +163,26 @@ public class StudentDaoJDBC implements StudentDao{
 		}
 	}
 	
+	@Override
+	public Student findByEmailPass(String email, String pass) {
+		try {
+			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE EMAIL = ? and PASS = ?");
+			st.setString(1, email);
+			st.setString(2, pass);
+			
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				return instantiateStudent(rs);
+			}
+			return null;
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+	}
 	private Student instantiateStudent(ResultSet rs) throws SQLException {
 		Student obj = new Student();
 		obj.setId(rs.getInt("Id"));
@@ -172,6 +194,7 @@ public class StudentDaoJDBC implements StudentDao{
 		obj.setAdm(rs.getBoolean("Adm"));
 		return obj;
 	}
+
 
 
 }

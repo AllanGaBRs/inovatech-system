@@ -12,6 +12,7 @@ public interface StudentDao {
 	Student findById(Integer id);
 	Student findByRa(String ra);
 	Student findByEmail(String email);
+	Student findByEmailPass(String email, String pass);
 	List<Student> findAll();
 	
 }

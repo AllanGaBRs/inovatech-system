@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="319.0" prefWidth="417.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx">
+<VBox prefHeight="319.0" prefWidth="417.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.EnterStudentController">
    <children>
       <Label alignment="TOP_LEFT" prefHeight="313.0" prefWidth="412.0" text="Aluno">
          <font>
@@ -32,8 +31,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtEmailStudent" GridPane.columnIndex="1" />
+            <TextField fx:id="txtPassStudent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="E-mail">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -44,7 +43,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" text="Entrar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btEnterStudent" mnemonicParsing="false" onAction="#onBtEnterStudent" text="Entrar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
          <VBox.margin>
             <Insets left="25.0" right="25.0" />
