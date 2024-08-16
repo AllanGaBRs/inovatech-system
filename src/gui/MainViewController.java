@@ -33,7 +33,11 @@ public class MainViewController implements Initializable{
 	@FXML
 	private MenuItem menuItemEntrarAdm;
 	@FXML
+	private MenuItem menuItemSair;
+	@FXML
 	private MenuItem menuItemVizualizarAlunos;
+	@FXML
+	private MenuItem menuItemValidarHoras;
 	@FXML
 	private MenuItem menuItemAjudaSobre;
 	@FXML
@@ -44,6 +48,10 @@ public class MainViewController implements Initializable{
 	
 	public static void setStudent(Student st) {
 		student = st;
+	}
+	
+	public static Student getStudent() {
+		return student;
 	}
 	
 	@FXML
@@ -60,8 +68,26 @@ public class MainViewController implements Initializable{
 		loadView("/gui/EnterStudent.fxml", x -> {});
 	}
 	@FXML
+	public void onMenuItemSairAction() {
+		if(student.getName() != null) {
+			student.setName(null);
+			student.setAdm(false);
+			Alerts.showAlert(null, null, null, AlertType.INFORMATION);
+			loadView("/gui/EnterStudent.fxml", x -> {});
+		}
+	}
+	@FXML
 	public void onMenuItemEntrarAdmAction() {
 			loadView("/gui/EnterAdm.fxml", x -> {});			
+	}
+	@FXML
+	public void onMenuItemValidarHorasAction() {
+		if(student.getName() == null || student.getAdm()) {
+			Alerts.showAlert("Logue como aluno", "Acesso negado", "acesso inválido", AlertType.ERROR);
+		}
+		if(student.getName() != null && !student.getAdm()) {
+			loadView("/gui/FieldStudent.fxml", x -> {});						
+		}
 	}
 	@FXML
 	public void onMenuItemVizualizarAlunosAction() {

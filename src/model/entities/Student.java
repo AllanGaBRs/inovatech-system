@@ -15,7 +15,8 @@ public class Student implements Serializable {
 	private String course;
 	private Double hours;
 	private Boolean adm;
-	
+	private java.sql.Date date;
+
 	public Student() {
 	}
 	
@@ -33,7 +34,25 @@ public class Student implements Serializable {
 		this.hours = hours;
 		this.adm = adm;
 	}
-	
+	public Student(Integer id, String ra, String name, String email, String pass, String course, Double hours, Boolean adm, java.sql.Date date) {
+		this.id = id;
+		this.ra = ra;
+		this.name = name;
+		this.email = email;
+		this.pass = pass;
+		this.course = course;
+		this.hours = hours;
+		this.adm = adm;
+		this.date = date;
+	}
+
+	public java.sql.Date getDate() {
+		return date;
+	}
+
+	public void setDate(java.sql.Date date) {
+		this.date = date;
+	}
 
 	public String getPass() {
 		return pass;

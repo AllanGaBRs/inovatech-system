@@ -61,6 +61,10 @@ public class RegisterController implements Initializable{
 				return false;
 			}
 		}
+		if(!txtCourse.getText().toLowerCase().equals("sistemas de informação") && !txtCourse.getText().toLowerCase().equals("análise e desenvolvimento de sistemas")) {
+			Alerts.showAlert("Aviso", "Curso inválido", "tente sistemas de informação ou análise e desenvolvimento de sistemas", AlertType.WARNING);
+			return false;
+		}
 		return true;
 	}
 	

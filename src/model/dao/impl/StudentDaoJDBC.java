@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,17 +16,17 @@ import banco.DbException;
 import model.dao.StudentDao;
 import model.entities.Student;
 
-public class StudentDaoJDBC implements StudentDao{
+public class StudentDaoJDBC implements StudentDao {
 
 	private Connection conn;
 	private PreparedStatement st;
 	private Statement t;
 	private ResultSet rs;
-	
+
 	public StudentDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	@Override
 	public void insert(Student obj) {
 		try {
@@ -61,15 +62,27 @@ public class StudentDaoJDBC implements StudentDao{
 	}
 
 	@Override
-	public void update(Student obj) {
-		// TODO Auto-generated method stub
-		
+	public void updateHours(Student obj, Double hours) {
+		try {
+			st = conn.prepareStatement("UPDATE student SET hours = hours + ? WHERE Id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			st.setDouble(1, hours);
+			st.setInt(2, obj.getId());
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -77,16 +90,16 @@ public class StudentDaoJDBC implements StudentDao{
 		try {
 			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE ID = ?");
 			st.setInt(1, id);
-			
+
 			rs = st.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				return instantiateStudent(rs);
 			}
 			return null;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
@@ -96,93 +109,138 @@ public class StudentDaoJDBC implements StudentDao{
 	public List<Student> findAll() {
 		try {
 			st = conn.prepareStatement("SELECT * FROM STUDENT");
-			
+
 			rs = st.executeQuery();
-			
+
 			Map<Integer, Student> map = new HashMap<>();
 			List<Student> list = new ArrayList<>();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Student student = map.get(rs.getInt("id"));
-				
-				if(student == null) {
+
+				if (student == null) {
 					student = instantiateStudent(rs);
 					map.put(student.getId(), student);
 				}
-				if(student.getId() == 1) {
+				if (student.getId() == 1) {
 					continue;
 				}
 				list.add(student);
 			}
 			return list;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
 	}
-	
+
 	@Override
 	public Student findByRa(String ra) {
 		try {
 			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE RA = ?");
 			st.setString(1, ra);
-			
+
 			rs = st.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				return instantiateStudent(rs);
 			}
 			return null;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
 	}
-	
+
 	@Override
 	public Student findByEmail(String email) {
 		try {
 			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE EMAIL = ?");
 			st.setString(1, email);
-			
+
 			rs = st.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				return instantiateStudent(rs);
 			}
 			return null;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
 	}
-	
+
 	@Override
 	public Student findByEmailPass(String email, String pass) {
 		try {
 			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE EMAIL = ? and PASS = ?");
 			st.setString(1, email);
 			st.setString(2, pass);
-			
+
 			rs = st.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				return instantiateStudent(rs);
 			}
 			return null;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
 	}
+	
+	@Override
+	public void updateDate(Student obj, java.sql.Date date) {
+		try {
+			st = conn.prepareStatement("UPDATE student SET dayOf = ? WHERE Id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			st.setDate(1, date);
+			st.setInt(2, obj.getId());
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
+		
+	}
+	
+	@Override
+	public Student selectDate(Integer id) {
+		try {
+			st = conn.prepareStatement("SELECT * FROM STUDENT WHERE ID = ?");
+			st.setInt(1, id);
+
+			rs = st.executeQuery();
+
+			if (rs.next()) {
+				return instantiateStudent(rs);
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+		
+	}
+	@Override
+	public void update(Student obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private Student instantiateStudent(ResultSet rs) throws SQLException {
 		Student obj = new Student();
 		obj.setId(rs.getInt("Id"));
@@ -192,6 +250,7 @@ public class StudentDaoJDBC implements StudentDao{
 		obj.setCourse(rs.getString("Course"));
 		obj.setHours(rs.getDouble("Hours"));
 		obj.setAdm(rs.getBoolean("Adm"));
+		obj.setDate(rs.getDate("DayOf"));
 		return obj;
 	}
 
