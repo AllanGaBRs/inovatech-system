@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="319.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FieldStudentController">
+<VBox prefHeight="319.0" prefWidth="417.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.FieldStudentController">
    <children>
       <Label alignment="TOP_LEFT" prefHeight="313.0" prefWidth="412.0" text="Aluno">
          <font>

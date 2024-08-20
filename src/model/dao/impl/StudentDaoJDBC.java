@@ -1,7 +1,6 @@
 package model.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,6 @@ public class StudentDaoJDBC implements StudentDao {
 
 	private Connection conn;
 	private PreparedStatement st;
-	private Statement t;
 	private ResultSet rs;
 
 	public StudentDaoJDBC(Connection conn) {

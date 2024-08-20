@@ -44,7 +44,7 @@ public class MainViewController implements Initializable{
 	private MenuItem login;
 	
 	private static StudentDao sd = DaoFactory.createStudentDao();
-	private static Student student = new Student(false);
+	private static Student student = sd.findById(2);
 	
 	public static void setStudent(Student st) {
 		student = st;
