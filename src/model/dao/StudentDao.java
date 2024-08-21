@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import model.entities.Report;
 import model.entities.Student;
 
 public interface StudentDao {
@@ -17,5 +18,6 @@ public interface StudentDao {
 	Student findByEmail(String email);
 	Student findByEmailPass(String email, String pass);
 	List<Student> findAll();
+	void insertReport(Student obj, Report rt);
 	
 }

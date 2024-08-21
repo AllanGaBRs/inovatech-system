@@ -13,6 +13,7 @@ import java.util.Map;
 import banco.DB;
 import banco.DbException;
 import model.dao.StudentDao;
+import model.entities.Report;
 import model.entities.Student;
 
 public class StudentDaoJDBC implements StudentDao {
@@ -239,6 +240,37 @@ public class StudentDaoJDBC implements StudentDao {
 		
 	}
 
+	@Override
+	public void insertReport(Student obj, Report rt) {
+		try {
+			st = conn.prepareStatement("INSERT INTO report " + "(Reports, idStudent, dayReport) "
+					+ "VALUES " + "(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, rt.getReport());
+			st.setInt(2, obj.getId());
+			st.setDate(3, rt.getDayReport());
+
+			int rowsAffected = st.executeUpdate();
+
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					rt.setId(id);
+				}
+				DB.closeResultSet(rs);
+			} else {
+				throw new DbException("Unexpected error! No rows affected!");
+			}
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+		
+	}
+	
 	private Student instantiateStudent(ResultSet rs) throws SQLException {
 		Student obj = new Student();
 		obj.setId(rs.getInt("Id"));
@@ -251,6 +283,7 @@ public class StudentDaoJDBC implements StudentDao {
 		obj.setDate(rs.getDate("DayOf"));
 		return obj;
 	}
+
 
 
 

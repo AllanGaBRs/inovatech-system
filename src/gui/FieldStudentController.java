@@ -18,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.dao.DaoFactory;
 import model.dao.StudentDao;
+import model.entities.Report;
 import model.entities.Student;
 
 public class FieldStudentController implements Initializable {
@@ -63,6 +64,7 @@ public class FieldStudentController implements Initializable {
 			}
 			sd.updateHours(st, hours);
 			sd.updateDate(st, ld);
+			sd.insertReport(stWithDate, new Report(txtRelatorio.getText(), stWithDate.getId(), ld));
 			Alerts.showAlert("AVISO", "Registro realizado", "horas enviadas com sucesso", AlertType.INFORMATION);
 			return;
 		}
@@ -74,6 +76,9 @@ public class FieldStudentController implements Initializable {
 	}
 
 	private boolean savedReport(TextArea relatorio) {
+		LocalDate localDate = LocalDate.now();
+		java.util.Date date = java.sql.Date.valueOf(localDate);
+		java.sql.Date ld = new java.sql.Date(date.getTime());
 		Student st = MainViewController.getStudent();
 		String path = "C:\\Relatorios";
 		String pathUser = path + "\\" + st.getName();
@@ -88,8 +93,7 @@ public class FieldStudentController implements Initializable {
 				return false;
 			}
 		}
-		Student stWithDate = (sd.selectDate(st.getId()));
-		String pathFile = pathUser + "\\" + stWithDate.getDate().toString();
+		String pathFile = pathUser + "\\" + ld.toString();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile))) {
 
 			String text = relatorio.getText();
@@ -115,6 +119,7 @@ public class FieldStudentController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Constraints.setTextFieldDouble(txtHours);
+		Constraints.setTextAreaMaxLength(txtRelatorio, 199);
 	}
 
 }
