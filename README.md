@@ -1,5 +1,5 @@
 # Inovatech System
-Inovatech System é um protótipo de sistema desenvolvido em JavaFX para gerenciar e monitorar o envio de relatórios dos alunos que participam de projetos de extensão. Este protótipo possui funcionalidades básicas e será expandido no futuro para incluir mais recursos.
+Inovatech System é um protótipo de sistema desenvolvido em JavaFX para gerenciar e monitorar o envio de relatórios dos alunos que participam do projeto de extensão dos cursos relacionadas a área de TI da Unipar. Este protótipo possui funcionalidades básicas e será expandido no futuro para incluir mais recursos.
 
 ## Funcionalidades Atuais
 
