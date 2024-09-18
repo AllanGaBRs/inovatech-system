@@ -34,6 +34,8 @@ JavaFX: Framework utilizado para a interface gráfica.
 
 Java: Linguagem de programação principal.
 
+JBDC: Para interação com o banco de dados.
+
 MySQL: Banco de dados para armazenar informações de alunos e relatórios.
 
 ## Contato
